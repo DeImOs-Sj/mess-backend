@@ -1,4 +1,5 @@
 # RESTful API Node Server Boilerplate
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTcyMTU4NjM2NiwiZXhwIjoxNzIxNTg4MTY2LCJ0eXBlIjoiQUNDRVNTIn0._4Ue4D67ov0PnrWIipHGpsbqugf5sOHmaLIK2rmT2Uw
 
 A boilerplate/starter project for quickly building RESTful APIs using [Node.js](https://nodejs.org), [TypeScript](https://www.typescriptlang.org), [Express](https://expressjs.com), and [Prisma](https://www.prisma.io).
 

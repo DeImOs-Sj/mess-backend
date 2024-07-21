@@ -10,6 +10,11 @@ const createUser = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(user);
 });
 
+const getMe = catchAsync(async (req, res) => {
+  res.send(req.user);
+});
+
+
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -40,5 +45,6 @@ export default {
   getUsers,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getMe
 };
