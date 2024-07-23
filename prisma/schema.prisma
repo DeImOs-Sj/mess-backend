@@ -49,4 +49,23 @@ enum TokenType {
   VERIFY_EMAIL
 }
 
+model Complaint {
+  id Int @id @default(autoincrement())
+  email String
+  campus String
+  mess String
+  Date DateTime
+  student_name String
+  student_phno String
+  college_name String
 
+  is_clean Boolean
+  is_pest_controlled Boolean
+  food_handler_protocols Boolean
+
+  complaint_desc String
+  suggestion_improvement String
+  complaint_category String
+  meal_time String
+  image_photos String[]
+}
