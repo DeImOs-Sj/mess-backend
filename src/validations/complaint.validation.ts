@@ -23,16 +23,22 @@ const createComplaint = {
   })
 };
 
-// const getUsers = {
-//   query: Joi.object().keys({
-//     name: Joi.string(),
-//     role: Joi.string(),
-//     sortBy: Joi.string(),
-//     limit: Joi.number().integer(),
-//     page: Joi.number().integer()
-//   })
-// };
+const getUsers = {
+  query: Joi.object().keys({
+    id: Joi.number(),
+    campus: Joi.string(),
+    mess: Joi.string(),
+    date_of_happening: Joi.date(),
+    is_clean: Joi.boolean(),
+    meal_time: Joi.string(),
+    createdAt: Joi.date(),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer()
+  })
+};
 
 export default {
     createComplaint,
+    getUsers
 };

@@ -55,6 +55,51 @@ const createComplaint = async (
 };
 
 
+/**
+ * Query for users
+ * @param {Object} filter - Prisma filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<Complaint[]>}
+ */
+const queryComplaints = async <Key extends keyof Complaint>(
+    filter: object,
+    options: {
+      limit?: number;
+      page?: number;
+      sortBy?: string;
+      sortType?: 'asc' | 'desc';
+    },
+    keys: Key[] = [
+      'id',
+      'campus',
+      'mess',
+      'date_of_happening',
+      'is_clean',
+      'meal_time',
+      'createdAt'
+    ] as Key[]
+  ): Promise<Pick<Complaint, Key>[]> => {
+    const page = options.page ?? 1;
+    const limit = options.limit ?? 10;
+    const sortBy = options.sortBy;
+    const sortType = options.sortType ?? 'desc';
+    const complaints = await prisma.complaint.findMany({
+      // where: filter,
+      // select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
+      // skip: page * limit,
+      // take: limit,
+      // orderBy: sortBy ? { [sortBy]: sortType } : undefined
+    });
+    return complaints as Pick<Complaint, Key>[];
+  };
+  
+
+
+
 export default {
     createComplaint,
+    queryComplaints,
 };

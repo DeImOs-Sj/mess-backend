@@ -9,6 +9,7 @@ const router = express.Router();
 router
   .route('/')
   .post(auth('createComplaint'), validate(complaintValidation.createComplaint), complaintController.createComplaint)
+  .get(auth('getComplaints'), validate(complaintValidation.getUsers), complaintController.getComplaints);
 
 export default router;
 
@@ -114,5 +115,95 @@ export default router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
+ *   get:
+ *     summary: Get all complaints
+ *     description: Anyone can retrive the basic info.
+ *     tags: [Complaint]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ * 
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: number
+ *         description: Complaint ID
+ *       - in: query
+ *         name: campus
+ *         schema:
+ *           type: string
+ *         description: Mess Campus
+ *       - in: query
+ *         name: mess
+ *         schema:
+ *           type: string
+ *         description: Mess Name
+ *       - in: query
+ *         name: date_of_happening
+ *         schema:
+ *           type: string
+ *         description: Date when incident happened
+ *       - in: query
+ *         name: is_clean
+ *         schema:
+ *           type: string
+ *         description: Was mess clean
+ *       - in: query
+ *         name: meal_time
+ *         schema:
+ *           type: string
+ *         description: Was it Breakfast, Lunch or Dinner
+ *       - in: query
+ *         name: createdAt
+ *         schema:
+ *           type: string
+ *         description: Complained created
+ * 
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of users
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 limit:
+ *                   type: integer
+ *                   example: 10
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 totalResults:
+ *                   type: integer
+ *                   example: 1
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  */
