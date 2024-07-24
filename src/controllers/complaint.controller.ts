@@ -52,7 +52,7 @@ const createComplaint = catchAsync(async (req, res) => {
 
 
 const getComplaints = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['id','campus','mess','date_of_happening','is_clean','meal_time','createdAt']);
+    const filter = pick(req.query, ['id','campus','mess','date_of_happening','status','is_clean','meal_time','createdAt']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await complaintService.queryComplaints(filter, options);
     res.send(result);

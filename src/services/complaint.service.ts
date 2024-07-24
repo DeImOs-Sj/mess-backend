@@ -77,6 +77,7 @@ const queryComplaints = async <Key extends keyof Complaint>(
       'campus',
       'mess',
       'date_of_happening',
+      'status',
       'is_clean',
       'meal_time',
       'createdAt'
@@ -87,11 +88,11 @@ const queryComplaints = async <Key extends keyof Complaint>(
     const sortBy = options.sortBy;
     const sortType = options.sortType ?? 'desc';
     const complaints = await prisma.complaint.findMany({
-      // where: filter,
-      // select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
-      // skip: page * limit,
-      // take: limit,
-      // orderBy: sortBy ? { [sortBy]: sortType } : undefined
+      where: filter,
+      select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
+      skip: ( page - 1 )* limit,
+      take: limit,
+      orderBy: sortBy ? { [sortBy]: sortType } : undefined
     });
     return complaints as Pick<Complaint, Key>[];
   };

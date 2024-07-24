@@ -152,6 +152,10 @@ export default router;
  *         name: is_clean
  *         schema:
  *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: number
  *         description: Was mess clean
  *       - in: query
  *         name: meal_time

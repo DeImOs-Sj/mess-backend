@@ -28,5 +28,6 @@ export interface Complaint {
   suggestion_improvement: string;
   complaint_category: string;
   meal_time: string;
+  status: number;
   image_photos: string[];
 }

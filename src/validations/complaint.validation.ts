@@ -31,6 +31,7 @@ const getComplaints = {
     date_of_happening: Joi.date(),
     is_clean: Joi.boolean(),
     meal_time: Joi.string(),
+    status: Joi.number(),
     createdAt: Joi.date(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
