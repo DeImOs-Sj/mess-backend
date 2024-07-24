@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import tokenService from './token.service';
 import userService from './user.service';
 import ApiError from '../utils/ApiError';
-import { TokenType, User } from '@prisma/client';
+import { Role, TokenType, User } from '@prisma/client';
 import prisma from '../client';
 import { encryptPassword, isPasswordMatch } from '../utils/encryption';
 import { AuthTokensResponse } from '../types/response';
@@ -16,19 +16,46 @@ import exclude from '../utils/exclude';
  */
 const loginUserWithEmailAndPassword = async (
   email: string,
-  password: string
+  password: string,
+  phoneNo: string,
+  role: string
 ): Promise<Omit<User, 'password'>> => {
-  const user = await userService.getUserByEmail(email, [
-    'id',
-    'email',
-    'name',
-    'phoneNo',
-    'password',
-    'role',
-    'isEmailVerified',
-    'createdAt',
-    'updatedAt'
-  ]);
+
+  console.log(role === Role.STUDENT)
+  let user = null;
+  if (role === Role.STUDENT) {
+    user = await userService.getUserByPhoneNo(phoneNo, [
+      'id',
+      'email',
+      'name',
+      'phoneNo',
+      'password',
+      'role',
+      'isEmailVerified',
+      'createdAt',
+      'updatedAt'
+    ]);
+    if (!user || !(await isPasswordMatch(password, user.password as string))) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect Phone Number');
+    }
+  }
+  else {
+    user = await userService.getUserByEmail(email, [
+      'id',
+      'email',
+      'name',
+      'phoneNo',
+      'password',
+      'role',
+      'isEmailVerified',
+      'createdAt',
+      'updatedAt'
+    ]);
+    if (!user || !(await isPasswordMatch(password, user.password as string))) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+    }
+  }
+
   if (!user || !(await isPasswordMatch(password, user.password as string))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }

@@ -21,14 +21,18 @@ const register = {
 
 const login = {
   body: Joi.object().keys({
-    email: Joi.string().required(),
+    email: Joi.string().email().when('role',{
+      not: "STUDENT",
+      then: Joi.required(),
+      otherwise: Joi.optional().allow("")
+    }),
+    phoneNo: Joi.string().when('role',{
+      is: "STUDENT",
+      then: Joi.required(),
+      otherwise: Joi.optional().allow("")
+    }),
+    role: Joi.string().required().valid("MANAGER","SUPERVISOR","RESIDENT_OFFICER","CAMPUS_DIRECTOR","COMMITTEE","STUDENT"),
     password: Joi.string().required()
-  })
-};
-
-const loginStudent = {
-  body: Joi.object().keys({
-    phoneNo: Joi.string().required(),
   })
 };
 
@@ -72,6 +76,5 @@ export default {
   refreshTokens,
   forgotPassword,
   resetPassword,
-  verifyEmail,
-  loginStudent
+  verifyEmail
 };

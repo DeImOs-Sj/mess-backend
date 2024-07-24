@@ -107,16 +107,25 @@ export default router;
  *             type: object
  *             required:
  *               - email
+ *               - phoneNo
+ *               - role
  *               - password
  *             properties:
  *               email:
  *                 type: string
  *                 format: email
+ *               phoneNo:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 description: STUDENT | MANAGER | SUPERVISOR
  *               password:
  *                 type: string
  *                 format: password
  *             example:
  *               email: fake@example.com
+ *               phoneNo: "9302842849"
+ *               role: "STUDENT"
  *               password: password1
  *     responses:
  *       "200":

@@ -2,7 +2,8 @@ import httpStatus from 'http-status';
 import catchAsync from '../utils/catchAsync';
 import { authService, userService, tokenService, emailService } from '../services';
 import exclude from '../utils/exclude';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
+import prisma from '../client';
 
 const register = catchAsync(async (req, res) => {
   const { email, password, phoneNo, name, role } = req.body;
@@ -13,8 +14,8 @@ const register = catchAsync(async (req, res) => {
 });
 
 const login = catchAsync(async (req, res) => {
-  const { email, password } = req.body;
-  const user = await authService.loginUserWithEmailAndPassword(email, password);
+  const { email, password, phoneNo, role } = req.body;
+  const user = await authService.loginUserWithEmailAndPassword(email, password, phoneNo, role);
   const tokens = await tokenService.generateAuthTokens(user);
   res.send({ user, tokens });
 });

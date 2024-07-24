@@ -139,6 +139,7 @@ const getUserByEmail = async <Key extends keyof User>(
     'id',
     'email',
     'name',
+    'phoneNo',
     'password',
     'role',
     'isEmailVerified',
@@ -148,6 +149,34 @@ const getUserByEmail = async <Key extends keyof User>(
 ): Promise<Pick<User, Key> | null> => {
   return prisma.user.findUnique({
     where: { email },
+    select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
+  }) as Promise<Pick<User, Key> | null>;
+};
+
+
+
+/**
+ * Get user by phone number
+ * @param {string} email
+ * @param {Array<Key>} keys
+ * @returns {Promise<Pick<User, Key> | null>}
+ */
+const getUserByPhoneNo = async <Key extends keyof User>(
+  phoneNo: string,
+  keys: Key[] = [
+    'id',
+    'email',
+    'name',
+    'phoneNo',
+    'password',
+    'role',
+    'isEmailVerified',
+    'createdAt',
+    'updatedAt'
+  ] as Key[]
+): Promise<Pick<User, Key> | null> => {
+  return prisma.user.findUnique({
+    where: { phoneNo },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
   }) as Promise<Pick<User, Key> | null>;
 };
@@ -197,6 +226,7 @@ export default {
   queryUsers,
   getUserById,
   getUserByEmail,
+  getUserByPhoneNo,
   updateUserById,
   deleteUserById
 };
