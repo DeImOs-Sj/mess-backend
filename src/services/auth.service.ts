@@ -22,6 +22,7 @@ const loginUserWithEmailAndPassword = async (
     'id',
     'email',
     'name',
+    'phoneNo',
     'password',
     'role',
     'isEmailVerified',

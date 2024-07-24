@@ -51,10 +51,17 @@ export default router;
  *             required:
  *               - name
  *               - email
+ *               - phoneNo
+ *               - role
  *               - password
  *             properties:
  *               name:
  *                 type: string
+ *               phoneNo:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 description: STUDENT | MANAGER | SUPERVISOR
  *               email:
  *                 type: string
  *                 format: email
@@ -65,8 +72,10 @@ export default router;
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
+ *               name: Swapnil
+ *               email: swapnil@example.com
+ *               phoneNo: "9382084913"
+ *               role: STUDENT
  *               password: password1
  *     responses:
  *       "201":

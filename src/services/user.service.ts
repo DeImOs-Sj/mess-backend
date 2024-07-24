@@ -11,21 +11,53 @@ import { encryptPassword } from '../utils/encryption';
  */
 const createUser = async (
   email: string,
+  phoneNo: string,
   password: string,
   name?: string,
   role: Role = Role.STUDENT
 ): Promise<User> => {
-  if (await getUserByEmail(email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
-  return prisma.user.create({
-    data: {
-      email,
-      name,
-      password: await encryptPassword(password),
-      role
+
+  if (role === Role.STUDENT) {
+    let user = await prisma.user.findFirst({
+      where: {
+        phoneNo: phoneNo
+      }
+    })
+
+    if (user !== null) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Phone Number already taken');
     }
-  });
+  } else {
+    if (await getUserByEmail(email)) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+    }
+  }
+
+  if (role == Role.STUDENT) {
+    return prisma.user.create({
+      data: {
+        email: "",
+        phoneNo,
+        name,
+        password: await encryptPassword("password1"),
+        role
+      }
+    });
+  }
+
+  else {
+    return prisma.user.create({
+      data: {
+        email,
+        phoneNo: "",
+        name,
+        password: await encryptPassword(password),
+        role
+      }
+    });
+  }
+
+
 };
 
 /**
@@ -61,11 +93,11 @@ const queryUsers = async <Key extends keyof User>(
   const sortBy = options.sortBy;
   const sortType = options.sortType ?? 'desc';
   const users = await prisma.user.findMany({
-    where: filter,
-    select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
-    skip: page * limit,
-    take: limit,
-    orderBy: sortBy ? { [sortBy]: sortType } : undefined
+    // where: filter,
+    // select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {}),
+    // skip: page * limit,
+    // take: limit,
+    // orderBy: sortBy ? { [sortBy]: sortType } : undefined
   });
   return users as Pick<User, Key>[];
 };
