@@ -5,7 +5,7 @@ const allRoles = {
   [Role.COMMITTEE]: ['getUsers'],
   [Role.MANAGER]: ['getUsers'],
   [Role.RESIDENT_OFFICER]: ['getUsers'],
-  [Role.SUPERVISOR]: ['getUsers', 'manageUsers' ,'me', 'createComplaint','getComplaints'],
+  [Role.SUPERVISOR]: ['getUsers', 'manageUsers' ,'me','getComplaints','complaintDashboard'],
 };
 
 export const roles = Object.keys(allRoles);

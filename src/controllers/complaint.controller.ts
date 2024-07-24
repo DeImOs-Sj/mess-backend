@@ -3,6 +3,7 @@ import pick from '../utils/pick';
 import ApiError from '../utils/ApiError';
 import catchAsync from '../utils/catchAsync';
 import { complaintService } from '../services';
+import prisma from '../client';
 
 const createComplaint = catchAsync(async (req, res) => {
     const {
@@ -55,10 +56,35 @@ const getComplaints = catchAsync(async (req, res) => {
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await complaintService.queryComplaints(filter, options);
     res.send(result);
-  });
+});
+
+const getDashboard = catchAsync(async (req, res) => {
+
+    const pending_queries = await prisma.complaint.count({
+        where: {
+            status: 0
+        }
+    })
+
+    const resolved_queries = await prisma.complaint.count({
+        where: {
+            status: 1
+        }
+    })
+
+    const total_queries = await prisma.complaint.count()
+
+
+    res.send({
+        "pending": pending_queries,
+        "resolved": resolved_queries,
+        "total": total_queries
+    });
+});
   
 
 export default {
     createComplaint,
-    getComplaints
+    getComplaints,
+    getDashboard
 };

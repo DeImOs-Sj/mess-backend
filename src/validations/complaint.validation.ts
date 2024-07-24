@@ -23,7 +23,7 @@ const createComplaint = {
   })
 };
 
-const getUsers = {
+const getComplaints = {
   query: Joi.object().keys({
     id: Joi.number(),
     campus: Joi.string(),
@@ -40,5 +40,5 @@ const getUsers = {
 
 export default {
     createComplaint,
-    getUsers
+    getComplaints
 };
