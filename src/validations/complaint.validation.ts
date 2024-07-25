@@ -39,7 +39,15 @@ const getComplaints = {
   })
 };
 
+
+const getComplaint = {
+  params: Joi.object().keys({
+    complaintId: Joi.number().integer()
+  })
+};
+
 export default {
     createComplaint,
-    getComplaints
+    getComplaints,
+    getComplaint
 };

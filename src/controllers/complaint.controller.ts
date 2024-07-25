@@ -52,9 +52,14 @@ const createComplaint = catchAsync(async (req, res) => {
 
 
 const getComplaints = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['id','campus','mess','date_of_happening','status','is_clean','meal_time','createdAt']);
+    const filter = pick(req.query, ['id','campus','mess','date_of_happening','status','complaint_category','is_clean','meal_time','createdAt']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await complaintService.queryComplaints(filter, options);
+    res.send(result);
+});
+
+const getComplaint = catchAsync(async (req, res) => {
+    const result = await complaintService.queryComplaint(req.params.complaintId);
     res.send(result);
 });
 
@@ -86,5 +91,6 @@ const getDashboard = catchAsync(async (req, res) => {
 export default {
     createComplaint,
     getComplaints,
-    getDashboard
+    getDashboard,
+    getComplaint
 };

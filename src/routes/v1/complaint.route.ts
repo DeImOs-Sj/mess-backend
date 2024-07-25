@@ -16,6 +16,10 @@ router
   .route('/dashboard')
   .get(auth('complaintDashboard'), complaintController.getDashboard);
 
+router
+  .route('/:complaintId')
+  .get(auth('getComplaint'), validate(complaintValidation.getComplaint), complaintController.getComplaint)
+
 export default router;
 
 
@@ -258,3 +262,39 @@ export default router;
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  */
+
+
+
+/**
+ * @swagger
+ * /complaint/{id}:
+ *   get:
+ *     summary: Get a Complaint
+ *     description: Get complaint information
+ *     tags: [Complaint]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Complaint id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
+ *
+ */
+
