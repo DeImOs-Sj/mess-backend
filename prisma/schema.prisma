@@ -12,8 +12,8 @@ datasource db {
 
 model User {
   id              Int      @id @default(autoincrement())
-  email           String? 
-  phoneNo         String?
+  email           String?
+  // phoneNo         String?
   name            String?
   password        String
   role            Role     @default(STUDENT)
@@ -22,7 +22,7 @@ model User {
   updatedAt       DateTime @updatedAt
   Token           Token[]
 
-  @@unique([email, phoneNo, role])
+  @@unique([email, role])
 }
 
 model Token {
@@ -72,7 +72,7 @@ model Complaint {
   meal_time              String
   image_photos           String[]
 
-  status    Int @default(0)
+  status    Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -6,16 +6,16 @@ import { Role, User } from '@prisma/client';
 import prisma from '../client';
 
 const register = catchAsync(async (req, res) => {
-  const { email, password, phoneNo, name, role } = req.body;
-  const user = await userService.createUser(email, phoneNo, password, name, role);
+  const { email, password, name, role } = req.body;
+  const user = await userService.createUser(email, password, name, role);
   const userWithoutPassword = exclude(user, ['password', 'createdAt', 'updatedAt']);
   const tokens = await tokenService.generateAuthTokens(user);
   res.status(httpStatus.CREATED).send({ user: userWithoutPassword, tokens });
 });
 
 const login = catchAsync(async (req, res) => {
-  const { email, password, phoneNo, role } = req.body;
-  const user = await authService.loginUserWithEmailAndPassword(email, password, phoneNo, role);
+  const { email, password, role } = req.body;
+  const user = await authService.loginUserWithEmailAndPassword(email, password, role);
   const tokens = await tokenService.generateAuthTokens(user);
   res.send({ user, tokens });
 });

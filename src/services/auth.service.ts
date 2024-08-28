@@ -17,34 +17,33 @@ import exclude from '../utils/exclude';
 const loginUserWithEmailAndPassword = async (
   email: string,
   password: string,
-  phoneNo: string,
+  // phoneNo: string,
   role: string
 ): Promise<Omit<User, 'password'>> => {
-
-  console.log(role === Role.STUDENT)
+  console.log(role === Role.STUDENT);
   let user = null;
-  if (role === Role.STUDENT) {
-    user = await userService.getUserByPhoneNo(phoneNo, [
-      'id',
-      'email',
-      'name',
-      'phoneNo',
-      'password',
-      'role',
-      'isEmailVerified',
-      'createdAt',
-      'updatedAt'
-    ]);
-    if (!user || !(await isPasswordMatch(password, user.password as string))) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect Phone Number');
-    }
-  }
-  else {
+  // if (role === Role.STUDENT) {
+  //   user = await userService.getUserByPhoneNo(phoneNo, [
+  //     'id',
+  //     'email',
+  //     'name',
+  //     // 'phoneNo',
+  //     'password',
+  //     'role',
+  //     'isEmailVerified',
+  //     'createdAt',
+  //     'updatedAt'
+  //   ]);
+  //   if (!user || !(await isPasswordMatch(password, user.password as string))) {
+  //     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect Phone Number');
+  //   }
+  // }
+  {
     user = await userService.getUserByEmail(email, [
       'id',
       'email',
       'name',
-      'phoneNo',
+      // 'phoneNo',
       'password',
       'role',
       'isEmailVerified',
